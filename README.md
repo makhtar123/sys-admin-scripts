@@ -87,3 +87,6 @@ sudo ./security_audit.sh
 
 ### Example output
 ![Security Audit](./assets/security_audit.png)
+
+## Disclaimer
+This tool is developed for educational purposes and authorized security testing only. The developer is not responsible for any misuse or damage caused by this tool. Always obtain permission before auditing a network you do not own
