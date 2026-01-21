@@ -84,7 +84,6 @@ connection_troubleshoot(){
     # Check Gateway
     local default_gateway=$(ip route | grep "default" | awk -F"via" '{print $2}' | awk '{print $1}' | head -n 1)
     
-    # BUG FIX: Ensure packet_loss is never empty. 
     # If grep finds nothing, default to 100.
     local packet_loss=$( (ping -c 3 -W 2 -q "$default_gateway" || true) | grep -oP '\d+(?=% packet loss)' || echo 100 | head -n 1)
     
@@ -95,7 +94,7 @@ connection_troubleshoot(){
     else
         echo -e "${YELLOW}? Gateway silent, attempting upstream verification...${NC}"
         
-        # If this fails, we do NOT exit. We warn and proceed.
+        # If this fails, do NOT exit. We warn and proceed.
         if ping -c 3 -W 2 8.8.8.8 > /dev/null 2>&1; then
             echo -e "${GREEN}✓ Internet reachable via ICMP. Diagnosis: Gateway is configured to drop ICMP ${NC}"
         else
@@ -127,7 +126,7 @@ dns_troubleshoot() {
             echo -e "${GREEN}✓ Target is reachable via ICMP ${NC}"
         else
             echo -e "${RED}X Target is unreachable via ICMP (Might be firewalled) ${NC}"
-            # We don't exit here, because Port Scan might still work!
+            # We don't exit here, because Port Scan might still work
     fi
 }
 
